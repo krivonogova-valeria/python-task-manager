@@ -38,19 +38,47 @@ def delete_task(task_id):
     return False
 
 
+def validate_title(title):
+    """Возвращает очищенное название или None, если оно пустое."""
+    title = title.strip()
+    if not title:
+        return None
+    return title
+
+
+def read_task_id():
+    """Запрашивает номер задачи. Возвращает число или None при неверном вводе."""
+    text = input("Номер задачи: ")
+    if not text.isdigit():
+        print("Нужно ввести целое положительное число.")
+        return None
+    return int(text)
+
+
 def main():
     while True:
-        print("\n1. Добавить задачу\n2. Показать задачи\n3. Выполнить задачу\n0. Выход")
+        print("\n1. Добавить задачу\n2. Показать задачи\n3. Выполнить задачу\n4. Удалить задачу\n0. Выход")
         choice = input("Выберите действие: ")
         if choice == "1":
-            add_task(input("Название задачи: "))
+            title = validate_title(input("Название задачи: "))
+            if title is None:
+                print("Название не может быть пустым.")
+            else:
+                add_task(title)
         elif choice == "2":
             show_tasks()
         elif choice == "3":
-            if not complete_task(int(input("Номер задачи: "))):
+            task_id = read_task_id()
+            if task_id is not None and not complete_task(task_id):
+                print("Задача не найдена.")
+        elif choice == "4":
+            task_id = read_task_id()
+            if task_id is not None and not delete_task(task_id):
                 print("Задача не найдена.")
         elif choice == "0":
             break
+        else:
+            print("Неизвестная команда, попробуйте ещё раз.")
 
 
 if __name__ == "__main__":
