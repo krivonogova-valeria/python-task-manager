@@ -21,10 +21,19 @@ def show_tasks():
 
 
 def complete_task(task_id):
-    """Отмечает задачу выполненной."""
+    """Отмечает задачу выполненной. Возвращает True, если задача найдена."""
     for task in tasks:
         if task["id"] == task_id:
             task["done"] = True
+            return True
+    return False
+
+
+def delete_task(task_id):
+    """Удаляет задачу по номеру. Возвращает True, если задача найдена."""
+    for task in tasks:
+        if task["id"] == task_id:
+            tasks.remove(task)
             return True
     return False
 
