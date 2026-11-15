@@ -1,5 +1,7 @@
 """Консольный менеджер задач."""
 
+from search import search_tasks, filter_by_status
+
 tasks = []
 
 
@@ -55,9 +57,19 @@ def read_task_id():
     return int(text)
 
 
+def print_found(items):
+    """Выводит найденные задачи."""
+    if not items:
+        print("Ничего не найдено.")
+        return
+    for task in items:
+        mark = "[x]" if task["done"] else "[ ]"
+        print(f"{task['id']}. {mark} {task['title']}")
+
+
 def main():
     while True:
-        print("\n1. Добавить задачу\n2. Показать задачи\n3. Выполнить задачу\n4. Удалить задачу\n0. Выход")
+        print("\n1. Добавить задачу\n2. Показать задачи\n3. Выполнить задачу\n4. Удалить задачу\n5. Найти задачу\n6. Показать невыполненные\n0. Выход")
         choice = input("Выберите действие: ")
         if choice == "1":
             title = validate_title(input("Название задачи: "))
@@ -75,6 +87,10 @@ def main():
             task_id = read_task_id()
             if task_id is not None and not delete_task(task_id):
                 print("Задача не найдена.")
+        elif choice == "5":
+            print_found(search_tasks(tasks, input("Что искать: ")))
+        elif choice == "6":
+            print_found(filter_by_status(tasks, False))
         elif choice == "0":
             break
         else:
