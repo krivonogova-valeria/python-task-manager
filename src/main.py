@@ -30,7 +30,7 @@ def complete_task(task_id):
 
 
 def delete_task(task_id):
-    """Удаляет задачу по номеру. Возвращает True, если задача найдена."""
+    """Удаляет задачу по её номеру. Возвращает True, если задача найдена."""
     for task in tasks:
         if task["id"] == task_id:
             tasks.remove(task)
