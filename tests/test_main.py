@@ -1,15 +1,20 @@
-import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-from main import add_task, complete_task
-def test_add_task():
-tasks = []
-add_task(tasks, "Тест")
+import os
 
-assert tasks[0]["title"] == "Тест"
-assert tasks[0]["done"] is False
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+
+import main
+
+
+def test_add_task():
+    main.tasks.clear()
+    task = main.add_task("Купить хлеб")
+    assert task["title"] == "Купить хлеб"
+    assert task["done"] is False
+
+
 def test_complete_task():
-tasks = []
-add_task(tasks, "Тест")
-complete_task(tasks, 1)
-assert tasks[0]["done"] is True
+    main.tasks.clear()
+    main.add_task("Тест")
+    assert main.complete_task(1) is True
+    assert main.complete_task(99) is False

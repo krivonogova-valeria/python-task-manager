@@ -1,6 +1,12 @@
-# python-task-manager
-Консольный менеджер задач на Python.
+# Python Task Manager
+
+Консольный менеджер задач на Python: добавление задач, просмотр списка и отметка выполненных.
+
+## Запуск
+
 python src/main.py
-- add_task: добавление задачи
-- list_tasks: вывод списка задач
-- complete_task: отметка задачи выполненно
+
+## Тесты
+
+pip install -r requirements.txt
+pytest
