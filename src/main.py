@@ -38,6 +38,13 @@ def delete_task(task_id):
     return False
 
 
+def clear_completed():
+    """Удаляет все выполненные задачи. Возвращает количество удалённых."""
+    before = len(tasks)
+    tasks[:] = [task for task in tasks if not task["done"]]
+    return before - len(tasks)
+
+
 def validate_title(title):
     """Возвращает очищенное название или None, если оно пустое."""
     title = title.strip()
@@ -57,7 +64,7 @@ def read_task_id():
 
 def main():
     while True:
-        print("\n1. Добавить задачу\n2. Показать задачи\n3. Выполнить задачу\n4. Удалить задачу\n0. Выход")
+        print("\n1. Добавить задачу\n2. Показать задачи\n3. Выполнить задачу\n4. Удалить задачу\n5. Удалить выполненные\n0. Выход")
         choice = input("Выберите действие: ")
         if choice == "1":
             title = validate_title(input("Название задачи: "))
@@ -75,6 +82,9 @@ def main():
             task_id = read_task_id()
             if task_id is not None and not delete_task(task_id):
                 print("Задача не найдена.")
+        elif choice == "5":
+            removed = clear_completed()
+            print(f"Удалено выполненных задач: {removed}")
         elif choice == "0":
             break
         else:
